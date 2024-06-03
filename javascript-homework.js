@@ -79,12 +79,33 @@ console.log(answers.fibonacciSum);
  * The prime factors of 13195 are 5, 7, 13 and 29.
  * What is the largest prime factor of the number 600851475143?
  */
-function largestPrimeFactor() {
-    //Your code goes here
+function largestPrimeFactor(n) {
+    let largestFactor = 0;
+ 
+    // Check for the smallest factors first (2 is the only even prime number)
+    while (n % 2 === 0) {
+        largestFactor=2;
+        n = n / 2;
+    }
+ 
+    // Check for odd factors from 3 onwards
+    for(let i = 3 ; i * i <= n ; i = i + 2){
+        while (n % i === 0) {
+            largestFactor=i;
+            n = n / i;
+        }
+    }
+ 
+    // Check for remaining prime factor
+    if(n > 2){
+        largestFactor=n;
+    }
+    return largestFactor;
 }
 
+const n = 600851475143;
 console.time("largestPrimeFactor");
-answers.largestPrimeFactor = largestPrimeFactor();
+answers.largestPrimeFactor = largestPrimeFactor(n);
 console.timeEnd("largestPrimeFactor");
 console.log(answers.largestPrimeFactor);
 
@@ -92,12 +113,32 @@ console.log(answers.largestPrimeFactor);
  * A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.
  * Find the largest palindrome made from the product of two 3-digit numbers.
  */
-function largestPalindrome() {
-    //Your code goes here
+function largestPalindrome(number) {
+    function isPalindrome(number) {
+        const string = number.toString();
+        const reversedString = string.split('').reverse().join('');
+        return string === reversedString;
+    }
+ 
+    let largestPalindrome = 0;
+    for (let i = 999; i >= 100; i--) {
+        if(i * 999 < largestPalindrome){
+            break;
+        }
+        for (let j = 999; j >= i; j--) {
+            const product = i * j;
+            if(product <= largestPalindrome){
+                break;
+            }
+            if (isPalindrome(product)) {
+                largestPalindrome = product;
+            }
+        }
+    }
+    return largestPalindrome;
 }
-
 console.time("largestPalindrome");
-answers.largestPalindrome = largestPalindrome();
+answers.largestPalindrome = largestPalindrome(121);
 console.timeEnd("largestPalindrome");
 console.log(answers.largestPalindrome);
 
@@ -106,7 +147,8 @@ console.log(answers.largestPalindrome);
  * What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
  */
 function smallestMultipleOf1to20() {
-    //Your code goes here
+    // for(let i=0;i<=20;i++)
+    //     if()
 }
 
 console.time("smallestMultipleOf1to20");
@@ -121,12 +163,21 @@ console.log(answers.smallestMultipleOf1to20);
  * Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.
  */
 
-function sumSquareDifference() {
-    //Your code goes here
+function sumSquareDifference(n) {
+    let sum1 = 0;
+    let sum2 = 0;
+
+    for(let i=1; i<=n; i++){
+        sum1 = sum1 + i*i;
+        sum2 = sum2 + i;
+    }
+    
+    return sum2*sum2 - sum1;
+
 }
 
 console.time("sumSquareDifference");
-answers.sumSquareDifference = sumSquareDifference();
+answers.sumSquareDifference = sumSquareDifference(100);
 console.timeEnd("sumSquareDifference");
 console.log(answers.sumSquareDifference);
 
@@ -134,12 +185,35 @@ console.log(answers.sumSquareDifference);
  * By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that the 6th prime is 13.
  * What is the 10 001st prime number?
  */
-function primeAtPosition() {
-    //Your code goes here
+function primeAtPosition(n) {
+    function isPrime(n) {
+        let div=0;
+        for(let d=2; d*d<=n; d= d + 1){
+            if(n%d === 0) 
+                div++;
+        }
+        if(div === 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    let i = 0;
+    let nr = 1;
+    while (i < n) {
+        nr++;
+        if (isPrime(nr)) {
+            i++;
+        }
+    }
+    return nr;
+
 }
 
 console.time("primeAtPosition");
-answers.primeAtPosition = primeAtPosition();
+answers.primeAtPosition = primeAtPosition(10001);
 console.timeEnd("primeAtPosition");
 console.log(answers.primeAtPosition);
 
